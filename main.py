@@ -13,12 +13,11 @@ async def main():
     try:
         ret = await pw_challenge(getenv('CF_DEST_URL'))
         if not ret['success']:
-            await notify('get cf_clearance failed.')
-            return
+            await error('get cf_clearance failed.')
 
         user_agent = ret.get('user_agent')
         if not user_agent:
-            await notify('get user_agent failed.')
+            await error('get user_agent failed.')
 
         cookies = ret.get('cookies')
         if not cookies:
@@ -26,12 +25,11 @@ async def main():
 
         cf_clearance = cookies.get('cf_clearance')
         if not cf_clearance:
-            await notify('miss cf_clearance in cookies.')
-            return
+            await error('miss cf_clearance in cookies.')
 
         await upload(cf_clearance, user_agent)
     except Exception as e:
-        await notify(str(e))
+        await error(str(e))
 
 
 async def upload(cf_clearance, user_agent):
@@ -57,6 +55,11 @@ async def notify(msg):
     }
 
     session.post(url=getenv('CF_NOTIFY_URL'), json=data, timeout=100)
+
+
+async def error(msg):
+    await notify(msg)
+    raise Exception(msg)
 
 
 async def pw_challenge(url):
