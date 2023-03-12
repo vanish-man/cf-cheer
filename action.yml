@@ -1,0 +1,6 @@
+name: cf-cheer
+description: cf-cheer action
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
