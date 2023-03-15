@@ -29,7 +29,7 @@ async def main():
 
         await upload(cf_clearance, user_agent)
     except Exception as e:
-        await notify(str(e))
+        await error(str(e))
 
 
 async def upload(cf_clearance, user_agent):
@@ -55,6 +55,11 @@ async def notify(msg):
     }
 
     session.post(url=getenv('CF_NOTIFY_URL'), json=data, timeout=100)
+
+
+async def error(msg):
+    await notify(msg)
+    raise Exception(msg)
 
 
 async def pw_challenge(url):
