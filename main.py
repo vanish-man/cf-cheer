@@ -67,8 +67,6 @@ async def pw_challenge(url):
         "headless": False,
         "proxy": {
             "server": getenv('CF_PROXY_SERVER'),
-            "username": getenv('CF_PROXY_USERNAME'),
-            "password": getenv('CF_PROXY_PASSWORD'),
         },
         "args": [
             '--safe-mode',
