@@ -1,4 +1,5 @@
 import asyncio
+import os
 import subprocess
 from os import getenv
 
@@ -14,6 +15,7 @@ async def main():
     ssh_user = getenv('CF_PROXY_USERNAME')
     ssh_server = getenv('CF_PROXY_SERVER')
     private_key_path = "/tmp/id_rsa_tmp"
+    os.chmod(private_key_path, 0o600)
     with open(private_key_path, 'w') as f:
         f.write(getenv('CF_PROXY_PRIVATE'))
 
