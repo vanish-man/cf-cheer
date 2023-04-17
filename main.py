@@ -13,7 +13,7 @@ session = requests.Session()
 async def main():
     ssh_user = getenv('CF_PROXY_USERNAME')
     ssh_server = getenv('CF_PROXY_SERVER')
-    private_key_path = getenv('HOME') + "/id_rsa_tmp"
+    private_key_path = "/tmp/id_rsa_tmp"
     with open(private_key_path, 'w') as f:
         f.write(getenv('CF_PROXY_PRIVATE'))
 
