@@ -34,10 +34,8 @@ async def main():
 
 async def upload(cf_clearance, user_agent):
     data = {
-        'proxy_url': 'socks5://127.0.0.1:1080',
         'cf_clearance': cf_clearance,
         'user_agent': user_agent,
-        'key': 'master',
     }
     resp = session.post(url=getenv('CF_UPSTREAM_UPLOAD_URL'), data=data, timeout=100)
 
