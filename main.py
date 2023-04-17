@@ -1,4 +1,5 @@
 import asyncio
+import subprocess
 from os import getenv
 
 import requests
@@ -10,6 +11,15 @@ session = requests.Session()
 
 
 async def main():
+    ssh_user = getenv('CF_PROXY_USERNAME')
+    ssh_server = getenv('CF_PROXY_SERVER')
+    private_key_path = getenv('HOME') + "/id_rsa_tmp"
+    with open(private_key_path, 'w') as f:
+        f.write(getenv('CF_PROXY_PRIVATE'))
+
+    cmd = 'ssh -i {} -f -N -L 10800:localhost:1080 {}@{}'.format(private_key_path, ssh_user, ssh_server)
+    subprocess.run(cmd, shell=True, check=True)
+
     try:
         ret = await pw_challenge(getenv('CF_DEST_URL'))
         if not ret['success']:
@@ -66,7 +76,7 @@ async def pw_challenge(url):
     launch_data = {
         "headless": False,
         "proxy": {
-            "server": getenv('CF_PROXY_SERVER'),
+            "server": 'socks5://127.0.0.1:10800',
         },
         "args": [
             '--safe-mode',
