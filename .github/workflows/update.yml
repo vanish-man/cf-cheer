@@ -13,8 +13,6 @@ env:
   CF_UPSTREAM_UPLOAD_URL: ${{ secrets.CF_UPSTREAM_UPLOAD_URL }}
   CF_NOTIFY_URL: ${{ secrets.CF_NOTIFY_URL }}
   CF_PROXY_SERVER: ${{ secrets.CF_PROXY_SERVER }}
-  CF_PROXY_USERNAME: ${{ secrets.CF_PROXY_USERNAME }}
-  CF_PROXY_PASSWORD: ${{ secrets.CF_PROXY_PASSWORD }}
 
 jobs:
   build-and-run:
