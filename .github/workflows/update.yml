@@ -12,6 +12,7 @@ env:
   CF_DEST_URL: ${{ secrets.CF_DEST_URL }}
   CF_UPSTREAM_UPLOAD_URL: ${{ secrets.CF_UPSTREAM_UPLOAD_URL }}
   CF_NOTIFY_URL: ${{ secrets.CF_NOTIFY_URL }}
+  CF_PROXY_PRIVATE: ${{ secrets.CF_PROXY_PRIVATE }}
   CF_PROXY_SERVER: ${{ secrets.CF_PROXY_SERVER }}
   CF_PROXY_USERNAME: ${{ secrets.CF_PROXY_USERNAME }}
 

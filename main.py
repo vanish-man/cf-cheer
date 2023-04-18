@@ -18,7 +18,7 @@ async def main():
         os.chmod('{}/.ssh'.format(home), 0o700)
 
         with open('{}/.ssh/id_rsa'.format(home), 'w') as f:
-            f.write(getenv('SSH_PRIVATE_KEY'))
+            f.write(getenv('CF_PROXY_PRIVATE'))
             os.chmod('{}/.ssh/id_rsa'.format(home), 0o600)
 
         cmd = 'ssh -f -N -L 1080:localhost:1080 {}@{}'.format(getenv('CF_PROXY_USERNAME'), getenv('CF_PROXY_SERVER'))
