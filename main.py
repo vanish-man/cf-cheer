@@ -1,4 +1,6 @@
 import asyncio
+import os
+import subprocess
 from os import getenv
 
 import requests
@@ -11,6 +13,17 @@ session = requests.Session()
 
 async def main():
     try:
+        home = getenv('HOME')
+        os.mkdir('{}/.ssh'.format(home))
+        os.chmod('{}/.ssh'.format(home), 0o700)
+
+        with open('{}/.ssh/id_rsa'.format(home), 'w') as f:
+            f.write(getenv('SSH_PRIVATE_KEY'))
+            os.chmod('{}/.ssh/id_rsa'.format(home), 0o600)
+
+        cmd = 'ssh -f -N -L 1080:localhost:1080 {}@{}'.format(getenv('CF_PROXY_USERNAME'), getenv('CF_PROXY_SERVER'))
+        subprocess.run(cmd, shell=True, check=True)
+
         ret = await pw_challenge(getenv('CF_DEST_URL'))
         if not ret['success']:
             raise Exception('get cf_clearance failed.')
@@ -66,7 +79,7 @@ async def pw_challenge(url):
     launch_data = {
         "headless": False,
         "proxy": {
-            "server": getenv('CF_PROXY_SERVER'),
+            "server": 'socks5://127.0.0.1:1080',
         },
         "args": [
             '--safe-mode',
