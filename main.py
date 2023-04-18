@@ -21,7 +21,8 @@ async def main():
             f.write(getenv('CF_PROXY_PRIVATE'))
             os.chmod('{}/.ssh/id_rsa'.format(home), 0o600)
 
-        cmd = 'ssh -f -N -L 1080:localhost:1080 {}@{}'.format(getenv('CF_PROXY_USERNAME'), getenv('CF_PROXY_SERVER'))
+        cmd = 'ssh -o StrictHostKeyChecking=no -f -N -L 1080:localhost:1080 {}@{}' \
+            .format(getenv('CF_PROXY_USERNAME'), getenv('CF_PROXY_SERVER'))
         subprocess.run(cmd, shell=True, check=True)
 
         ret = await pw_challenge(getenv('CF_DEST_URL'))
