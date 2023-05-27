@@ -98,7 +98,7 @@ async def pw_challenge(url):
             browser = await p.firefox.launch(**launch_data)
             page = await browser.new_page()
             await async_stealth(page, pure=False)
-            await page.goto(url)
+            await page.goto(url, timeout=60000)
             success = await async_cf_retry(page)
             if not success:
                 await browser.close()
